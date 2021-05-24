@@ -146,6 +146,7 @@ function mcmc!(chain::Chain, n_steps::Int=100; verbose::Bool=false)
     i₀ = length(chain)
     resize!(chain.samples, i₀ + n_steps)
     for i in (i₀ + 1):(i₀ + n_steps)
+        verbose && i%10 == 0 && println("Iteration ", i, "/", n_steps)
         j = chain.stats[:lastj] + 1
         j == no_trees(chain) + 1 ? j = 1 : nothing
         chain.stats[:lastj] = j
