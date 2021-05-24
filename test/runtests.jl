@@ -199,9 +199,11 @@ function test_chain(chain::Chain; initial=true)
     initial ? test_sample(chain.samples[1]) : test_sample(chain.samples[end])
 
     stat_keys = keys(chain.stats)
-    @test length(stat_keys) == 1
+    @test length(stat_keys) == 2
     @test :lastj in stat_keys
+    @test :accepted in stat_keys
     @test chain.stats[:lastj] <= chain.hyper.k
+    @test chain.stats[:accepted] <= length(chain)
 
     test_hyperparams(chain.hyper)
 end 

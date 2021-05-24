@@ -9,6 +9,7 @@ A chain of samples from the posterior space.
 - `y`: Vector of the outcome values.
 - `stats`: `Dict` with statistics about the `Chain`.
   - `:lastj`: Index of the last `RuleNode` that was sampled during MCMC.
+  - `:accepted`: Number of accepted sample proposals
 - `hyper`: `Hyperparameters` of the `Chain`.
 
 """
@@ -38,7 +39,7 @@ function Chain(x::Matrix, y::Vector;
     catch e 
         sample.β = zeros(k+1)
     end 
-    stats = Dict([(:lastj, 0)])
+    stats = Dict([(:lastj, 0), (:accepted, 0)])
     return Chain([sample], grammar, x, y, stats, hyper)
 end 
 

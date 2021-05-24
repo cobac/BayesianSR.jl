@@ -130,6 +130,7 @@ function step(chain::Chain, i::Int, j::Int ; verbose::Bool=false)
     α = min(1.0, R)
     if (rand() < α)
         verbose && println("Updating! Movement = ", proposal_tree.movement)
+        chain.stats[:accepted] += 1
         return proposal
     else 
         verbose && println("Not updating! Movement = ", proposal_tree.movement)
