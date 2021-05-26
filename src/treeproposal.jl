@@ -59,7 +59,8 @@ function proposetree(tree::RuleNode, grammar::Grammar, hyper::Hyperparams; verbo
             # P of growing this specific branch
             tree_p(changed_tree.changed_node, changed_tree.d, grammar)
         new_nₒ = n_operators(tree, grammar)
-        new_p_0 = 0
+        new_n_lo = n_linear_operators(tree)
+        new_p_0 = new_n_lo > 0 ? new_n_lo/(4*(new_n_lo + 3)) : 0
         new_p_g = (1 - new_p_0)/3 * min(1, 8/(new_nₒ+2))
         new_p_p = (1-new_p_0)/3-new_p_g
         p_inv = log(new_p_p) + # P of movement = prune
@@ -72,7 +73,8 @@ function proposetree(tree::RuleNode, grammar::Grammar, hyper::Hyperparams; verbo
             log(1/nₒ) + # P of selecting this operator node
             log(1/length(terminal_is)) # P of selecting this terminal
         new_nₒ = n_operators(tree, grammar)
-        new_p_0 = 0
+        new_n_lo = n_linear_operators(tree)
+        new_p_0 = new_n_lo > 0 ? new_n_lo/(4*(new_n_lo + 3)) : 0
         new_p_g = (1 - new_p_0)/3 * min(1, 8/(new_nₒ+2))
         p_inv = log(new_p_g) + # P of movement = grow
             log(1/n_terminals(tree, grammar)) + # P of selecting this terminal node
@@ -85,7 +87,8 @@ function proposetree(tree::RuleNode, grammar::Grammar, hyper::Hyperparams; verbo
             log(1/n_cand) + # P of selecting this candidate node
             log(deleted_tree.p_child) # P of selecting this specific child
         new_n_cand = n_candidates(tree, grammar)
-        new_p_0 = 0
+        new_n_lo = n_linear_operators(tree)
+        new_p_0 = new_n_lo > 0 ? new_n_lo/(4*(new_n_lo + 3)) : 0
         new_p_d = (1-p_0)/3 * new_n_cand/(new_n_cand+3)
         new_p_i = (1-new_p_0)/3 - new_p_d
         p_inv = log(new_p_i) + # P of movement = insert
@@ -106,7 +109,8 @@ function proposetree(tree::RuleNode, grammar::Grammar, hyper::Hyperparams; verbo
             p += tree_p(inserted_tree.new_branch, inserted_tree.d, grammar)
         end 
         new_n_cand = n_candidates(tree, grammar)
-        new_p_0 = 0
+        new_n_lo = n_linear_operators(tree)
+        new_p_0 = new_n_lo > 0 ? new_n_lo/(4*(new_n_lo + 3)) : 0
         new_p_d = (1-p_0)/3 * new_n_cand/(new_n_cand+3)
         p_inv = log(new_p_d) + # P of movement = delete
             log(1/new_n_cand) # P of selecting this candidate node
