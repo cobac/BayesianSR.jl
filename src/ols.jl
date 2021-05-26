@@ -11,6 +11,7 @@ function optimβ!(sample::Sample, x, y, grammar::Grammar)
     xs[:, 2:end] = evalsample(sample, x, grammar)
     # QR decomposition
     β = xs \ y
+    any(isnan.(β)) && error("optimβ! failed with NaN. Probably improper sample with Inf.")
     for i in eachindex(sample.β)
         sample.β[i] = β[i]
     end 
