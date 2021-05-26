@@ -114,7 +114,7 @@ function step(chain::Chain, i::Int, j::Int ; verbose::Bool=false)
     end 
 
     # Reversible Jump MCMC required
-    if isdefined(BayesianSR, :rjmcmc)
+    if @isdefined rjmcmc
         numerator += rjmcmc_h⁺ + jacobian
         denominator += rjmcmc_h
     end 
