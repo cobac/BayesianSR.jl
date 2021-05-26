@@ -31,12 +31,11 @@ function step(chain::Chain, i::Int, j::Int ; verbose::Bool=false)
     # Check for linear operators in proposal
     n_linear_operators_proposal = n_linear_operators(proposal_tree.tree)
     any_linear_operator_proposal = n_linear_operators_proposal > 0
-    verbose && any_linear_operator_proposal &&
-        println("There are linear operators in the proposal.")
-    # Even if there are no linear operators,
-    # we might need to sample variances to calculate rjmcmc_h⁺ in the shrinkage edge case
-    proposal.σ²[:σ²_a] = σ²_a = rand(σ²_a_prior)
-    proposal.σ²[:σ²_b] = σ²_b = rand(σ²_b_prior)
+    if any_linear_operator_proposal
+        verbose && println("There are linear operators in the proposal.")
+        proposal.σ²[:σ²_a] = σ²_a = rand(σ²_a_prior)
+        proposal.σ²[:σ²_b] = σ²_b = rand(σ²_b_prior)
+    end 
 
     # Generate new LinearCoefs and auxiliary variables U
     if any_linear_operator_old && any_linear_operator_proposal
