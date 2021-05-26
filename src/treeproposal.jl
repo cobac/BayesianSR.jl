@@ -45,6 +45,7 @@ function proposetree(tree::RuleNode, grammar::Grammar, hyper::Hyperparams; verbo
     movements = [:stay , :grow, :prune, :delete, :insert, :re_operator, :re_feature]
     weights =   [p_0   ,   p_g,    p_p,     p_d,     p_i,         p_ro,        p_rf]
     mov = sample(movements, Weights(weights))
+    verbose && println("Old tree: ", tree)
     verbose && println("Tree movement: ", mov)
 
     # Hyper: α, β = 2, 1
@@ -139,5 +140,8 @@ function proposetree(tree::RuleNode, grammar::Grammar, hyper::Hyperparams; verbo
             log(1/nₜ) + # P of selecting this terminal node
             log(1/(length(terminal_is) - 1)) # P of choosing this new feature
     end 
+    verbose && println("New tree: ", tree)
+    verbose && println("Log-probability of tree movement: ", p)
+    verbose && println("Log-probability of inverse tree movement: ", p_inv)
     return TreeProposal(tree, mov, p, p_inv)
 end 
