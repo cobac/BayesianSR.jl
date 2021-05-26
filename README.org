@@ -1,1 +1,5 @@
 [[https://github.com/cobac/BayesianSR/actions/workflows/Runtest.yml][https://github.com/cobac/BayesianSR/actions/workflows/Runtest.yml/badge.svg]]
+
+Bayesian symbolic regression based on the algorithm described in http://arxiv.org/abs/1910.08892v3.
+
+The symbolic trees are represented using [[https://github.com/sisl/ExprRules.jl][ExprRules]] =RuleNode='s.
