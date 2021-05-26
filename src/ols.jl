@@ -8,9 +8,7 @@ function optimβ!(sample::Sample, x, y, grammar::Grammar)
     n = size(x, 1)
     xs = Matrix{Float64}(undef, n, length(sample.trees) + 1)
     xs[:, 1] = ones(size(x, 1))
-    for k in eachindex(sample.trees)
-        xs[:, k + 1] = evaltree(sample.trees[k], x, grammar)
-    end 
+    xs[:, 2:end] = evalsample(sample, x, grammar)
     # QR decomposition
     β = xs \ y
     for i in eachindex(sample.β)
