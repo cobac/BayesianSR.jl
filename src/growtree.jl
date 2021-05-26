@@ -11,11 +11,11 @@ function growtree(grammar::Grammar, hyper::Hyperparams, d::Int)
         error("You are trying to grow a tree from a Grammar without terminal nodes.")
     # Hyper: α, β = 2, 1
     # Prior: Uniform for operators and features
-    p₁ = 2/(1+d)
+    p₁ = 2 / (1 + d)
     if p₁ > rand()
         node = new_operator(grammar, hyper)
         for child in 1:node_types[node.ind]
-            push!(node.children, growtree(grammar, hyper, d+1))
+            push!(node.children, growtree(grammar, hyper, d + 1))
         end 
     else
         # Node = terminal

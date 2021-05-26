@@ -35,7 +35,7 @@ function sampleterminal(node::RuleNode, grammar::Grammar)
     out = sample(NodeLoc, node)
     # if node is LinearCoef or operator, resample
     target = get(node, out)
-    while target.ind == 1|| in(target.ind, operator_is)
+    while target.ind == 1 || in(target.ind, operator_is)
         out = sample(NodeLoc, node)
         target = get(node, out)
     end 
@@ -128,7 +128,7 @@ Number of linear operators in a `RuleNode`.
 """
 function n_linear_operators(node::RuleNode)
     nodes = flatten(node)
-    return count(i -> i==2, nodes)
+    return count(i -> i == 2, nodes)
 end 
 
 """

@@ -18,7 +18,7 @@ struct Chain
     grammar::Grammar
     x::Matrix{Float64}
     y::Vector{Float64}
-    stats::Dict{Symbol, Int}
+    stats::Dict{Symbol,Int}
     hyper::Hyperparams
 end 
 
@@ -28,8 +28,8 @@ end
 Initialize a `Chain`.
 """
 function Chain(x::Matrix, y::Vector;
-               operators::Grammar = deepcopy(defaultgrammar),
-               hyper::Hyperparams = Hyperparams())
+               operators::Grammar=deepcopy(defaultgrammar),
+               hyper::Hyperparams=Hyperparams())
     @unpack k, σ²_prior = hyper
     grammar = append!(deepcopy(lineargrammar),
                       append!(deepcopy(operators), variablestogrammar(x)))
@@ -37,7 +37,7 @@ function Chain(x::Matrix, y::Vector;
     try 
         optimβ!(sample, x, y, grammar)
     catch e 
-        sample.β = zeros(k+1)
+        sample.β = zeros(k + 1)
     end 
     stats = Dict([(:lastj, 0), (:accepted, 0)])
     return Chain([sample], grammar, x, y, stats, hyper)

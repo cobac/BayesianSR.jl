@@ -10,7 +10,7 @@ struct LinearCoef
 end 
 
 function LinearCoef(hyper::Hyperparams) 
-    @unpack σ²_a_prior , σ²_b_prior = hyper
+    @unpack σ²_a_prior, σ²_b_prior = hyper
     σ²_a = rand(σ²_a_prior)
     σ²_b = rand(σ²_b_prior)
     a = rand(Normal(1, σ²_a))
@@ -18,7 +18,7 @@ function LinearCoef(hyper::Hyperparams)
     return LinearCoef(a, b)
 end 
 
-function LinearCoef(a::AbstractFloat, b::AbstractFloat; variances::Bool = false)
+function LinearCoef(a::AbstractFloat, b::AbstractFloat; variances::Bool=false)
     if variances
         a = rand(Normal(1, a))
         b = rand(Normal(0, b))

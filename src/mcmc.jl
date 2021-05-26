@@ -119,7 +119,6 @@ function step(chain::Chain, i::Int, j::Int ; verbose::Bool=false)
             logpdf(σ²_b_prior, old_σ²_b)  # σ²_b prior
     end 
 
-
     # Reversible Jump MCMC required
     if @isdefined rjmcmc
         numerator += rjmcmc_h⁺ + jacobian
@@ -157,7 +156,7 @@ function mcmc!(chain::Chain, n_steps::Int=100; verbose::Bool=false)
     i₀ = length(chain)
     resize!(chain.samples, i₀ + n_steps)
     for i in (i₀ + 1):(i₀ + n_steps)
-        verbose && println("==Iteration ", i-i₀, "/", n_steps, " at sample ", i, "==")
+        verbose && println("==Iteration ", i - i₀, "/", n_steps, " at sample ", i, "==")
         j = chain.stats[:lastj] + 1
         j == no_trees(chain) + 1 ? j = 1 : nothing
         chain.stats[:lastj] = j

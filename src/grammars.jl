@@ -87,7 +87,7 @@ Returns a vector with the indices of all operators in a grammar.
 """
 function operator_indices(grammar::Grammar)
     node_types = nodetypes(grammar)
-    is = findall(x -> x==1 || x==2, node_types)
+    is = findall(x -> x == 1 || x == 2, node_types)
     return is
 end 
 

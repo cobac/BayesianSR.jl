@@ -45,11 +45,11 @@ function tree_p(node::RuleNode, d::Int, grammar::Grammar)
         # Hyper: α, β = 2, 1
         # Prior: Uniform for operators and features
         if node.ind in operator_is
-            p += log(2/(1 + node.cnt)) + # P of inserting an operator
-                log(1/length(operator_is)) # P of selecting this operator
+            p += log(2 / (1 + node.cnt)) + # P of inserting an operator
+                log(1 / length(operator_is)) # P of selecting this operator
         else 
-            p += log(1 - (2/(1 + node.cnt))) + # P of inserting a terminal
-                log(1/length(terminal_is)) # P of selecting this terminal
+            p += log(1 - (2 / (1 + node.cnt))) + # P of inserting a terminal
+                log(1 / length(terminal_is)) # P of selecting this terminal
         end 
     end 
     return p

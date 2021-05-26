@@ -65,7 +65,7 @@ See also: `delete!`
 """
 struct DeletedTree
     tree::RuleNode
-    dropped_node::Union{Nothing, RuleNode}
+    dropped_node::Union{Nothing,RuleNode}
     d::Int 
     p_child::Float64
 end 
@@ -100,7 +100,7 @@ function delete!(node::RuleNode, grammar::Grammar)
         operator_is = operator_indices(grammar)
         ind_children = [child.ind for child in target.children]
         ind_operator = findall(x -> in(x, operator_is), ind_children)
-        p_child = 1/length(ind_operator)
+        p_child = 1 / length(ind_operator)
         i = sample(ind_operator)
         dropped_node = target.children[i == 1 ? 2 : 1]
         node = target.children[i]
@@ -123,7 +123,7 @@ See also: `insert_node!`
 """
 struct InsertedTree
     tree::RuleNode
-    new_branch::Union{Nothing, RuleNode}
+    new_branch::Union{Nothing,RuleNode}
     d::Int 
 end 
 
@@ -179,7 +179,7 @@ See also: `insert_node!`
 """
 struct ReassignedTree
     tree::RuleNode
-    changed_node::Union{Nothing, RuleNode}
+    changed_node::Union{Nothing,RuleNode}
     d::Int
     transition::Symbol
 end 
@@ -198,7 +198,7 @@ function re_operator!(node::RuleNode, grammar::Grammar, hyper::Hyperparams)
     node_types = nodetypes(grammar)
     operator_is = operator_indices(grammar)
     loc = sampleoperator(node, grammar)
-    target =get(node, loc)
+    target = get(node, loc)
     d = node_depth(node, target)
     target = deepcopy(target)
     old_ind = target.ind
