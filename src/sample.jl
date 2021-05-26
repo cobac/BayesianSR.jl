@@ -29,6 +29,6 @@ function Sample(k::Real, grammar::Grammar, hyper::Hyperparams)
     Sample([RuleNode(grammar, hyper) for _ in 1:k],
            zeros(k + 1),
            Dict([(:σ², rand(σ²_prior)),
-                 (:σ²_a, 0),
-                 (:σ²_b, 0)]))
+                 (:σ²_a, rand(σ²_a_prior)),
+                 (:σ²_b, rand(σ²_b_prior))]))
 end 
