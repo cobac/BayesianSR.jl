@@ -31,6 +31,8 @@ Optionally you can define a custom set of hyperparameters or a custom grammar of
   hyperparams = Hyperparams(...)
 #+END_SRC
 
+The ~Chain()~ constructor will append to the grammar of operators the mandatory /linear transformation/ operator and a dummy element for each of the features of the dataset.
+
 #+BEGIN_SRC julia :results silent :exports code
   chain = Chain(x, y) # or
   chain = Chain(x, y, operators = defaultgrammar, hyper = hyperparams)
