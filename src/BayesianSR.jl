@@ -1,8 +1,9 @@
 module BayesianSR
-using ExprRules, Distributions, Random, StatsBase, Parameters
+using ExprRules, Distributions, Random, StatsBase, Parameters, Reexport
 import ExprRules: RuleNodeAndCount, RuleNode
 
 export Chain, Hyperparams, mcmc!, no_trees
+@reexport using ExprRules: @grammar
 
 # Hyperparameters of the model
 include("hyperparams.jl")
