@@ -3,3 +3,40 @@
 Bayesian symbolic regression based on the algorithm described in http://arxiv.org/abs/1910.08892v3.
 
 The symbolic trees are represented using [[https://github.com/sisl/ExprRules.jl][ExprRules]] =RuleNode='s.
+
+* Basic usage
+
+#+BEGIN_SRC julia :results silent :exports code
+  ] add https://github.com/cobac/BayesianSR
+  using BayesianSR  
+
+  x = Matrix() # Rows: observations, columns: features  
+  y = Vector() # Outcome observations
+
+#+END_SRC
+
+Optionally you can define a custom set of hyperparameters or a custom grammar of possible functions using =ExprRules= syntax. The default grammar is:
+
+#+BEGIN_SRC julia :results silent :exports code
+  defaultgrammar = @grammar begin
+      Real = Real + Real
+      Real = Real - Real
+      Real = Real * Real 
+      Real = Real / Real
+      Real = cos(Real) 
+      Real = sin(Real) 
+  end
+
+  ?Hyperparams  
+  hyperparams = Hyperparams(...)
+#+END_SRC
+
+#+BEGIN_SRC julia :results silent :exports code
+  chain = Chain(x, y) # or
+  chain = Chain(x, y, operators = defaultgrammar, hyper = hyperparams)
+
+  # Step the chain n steps  
+  mcmc!(chain, n, verbose = false)
+#+END_SRC
+
+
