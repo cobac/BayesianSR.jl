@@ -37,6 +37,24 @@ The ~Chain()~ constructor will append to the grammar of operators the mandatory 
   chain = Chain(x, y) # or
   chain = Chain(x, y, operators = defaultgrammar, hyper = hyperparams)
 
+  julia> chain.grammar
+  1: LinearCoef = _(BayesianSR.LinearCoef(0, 0))
+  2: Real = linear_operator(LinearCoef, Real)
+  3: Real = Real + Real
+  4: Real = Real - Real
+  5: Real = Real * Real
+  6: Real = Real / Real
+  7: Real = cos(Real)
+  8: Real = sin(Real)
+  9: Real = x1
+  10: Real = x2
+  11: Real = x3
+  12: Real = x4
+  13: Real = x5
+#+END_SRC
+
+#+BEGIN_SRC julia :results silent :exports code
+  
   # Step the chain n steps  
   mcmc!(chain, n, verbose = false)
 #+END_SRC
