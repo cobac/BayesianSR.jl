@@ -136,9 +136,10 @@ function proposetree(tree::RuleNode, grammar::Grammar, hyper::Hyperparams; verbo
         end 
     elseif mov == :re_feature
         tree = re_feature!(tree, grammar)
-        p = p_inv = log(p_rf) + # P of movement = reassign feature
-            log(1 / nₜ) + # P of selecting this terminal node
-            log(1 / (length(terminal_is) - 1)) # P of choosing this new feature
+        p = p_inv = 1 # The ratio is always going to be the same
+        # p = p_inv = log(p_rf) + # P of movement = reassign feature
+        #     log(1 / nₜ) + # P of selecting this terminal node
+        #     log(1 / (length(terminal_is) - 1)) # P of choosing this new feature
     end 
     verbose && println("New tree: ", tree)
     verbose && println("Log-probability of tree movement: ", p)
