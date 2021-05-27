@@ -49,8 +49,8 @@ The ~Chain()~ constructor will append to the grammar of operators the mandatory 
   9: Real = x1
   10: Real = x2
   11: Real = x3
-  12: Real = x4
-  13: Real = x5
+  11: Real = ...
+  
 #+END_SRC
 
 #+BEGIN_SRC julia :results silent :exports code
