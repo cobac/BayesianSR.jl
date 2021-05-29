@@ -104,18 +104,18 @@ end
 @testset "Tree generation" begin
     Random.seed!(6)
     tree = RuleNode(fullgrammar, hyper)
-    table = BayesianSR.tableforeval(x, 3, fullgrammar)
-    @test x[3, 1] == table[:x1]
-    @test x[3, 2] == table[:x2]
-    @test x[3, 3] == table[:x3]
-
+    table = SymbolTable(fullgrammar, BayesianSR)
+    i = 3
+    table[:x1] = x[i, 1]
+    table[:x2] = x[i, 2]
+    table[:x3] = x[i, 3]
     eq = get_executable(tree, fullgrammar)
     answ = Core.eval(table, eq)
     @test length(answ) == 1
     @test isreal(answ)
     manual_answ = cos(x[3, 2]) / (-6.159091338126841 + 0.51775562953136 * x[3,1])
     @test answ ≈ manual_answ
-    treex = BayesianSR.evaltree(tree, x, fullgrammar)
+    treex = BayesianSR.evaltree(tree, x, fullgrammar, table)
     @test length(treex) == size(x, 1)
 end
 
@@ -186,10 +186,12 @@ end
     Random.seed!(1)
     sample = BayesianSR.Sample(k, fullgrammar, hyper)
     test_sample(sample)
+    @test all(iszero.(BayesianSR.evalmodel(sample, x, fullgrammar)))
     @test maximum(sample.β) == 0
     BayesianSR.optimβ!(sample, x, y, fullgrammar)
     @test length(sample.β) == k + 1
     @test in(0, sample.β) == false
+    @test all(isnan.(BayesianSR.evalmodel(sample, x, fullgrammar))) == false
 end 
 
 function test_chain(chain::Chain; initial=true)
