@@ -166,8 +166,5 @@ function mcmc!(chain::Chain, n_steps::Int=100; verbose::Bool=false)
 end 
 
 function log_likelihood(sample::Sample, grammar::Grammar, x::Matrix{Float64}, y::Vector{Float64})
-    logpdf(MvNormal(sample.β[begin] .+
-        evalsample(sample, x, grammar) * view(sample.β, 2:length(sample.β)),
-                    √sample.σ²[:σ²]),
-           y)
+    return logpdf(MvNormal(evalmodel(sample, x, grammar), √sample.σ²[:σ²]), y)
 end 
