@@ -4,7 +4,7 @@
 
 Evaluates an `RuleNode`. Outputs a vector with a value for every observation.
 """
-function evaltree(tree::RuleNode, x, grammar::Grammar, table::Dict{Symbol, Any})
+function evaltree(tree::RuleNode, x, grammar::Grammar, table::SymbolTable)
     n = size(x, 1)
     out = Vector{Float64}(undef, n)
     eq = get_executable(tree, grammar)
@@ -30,11 +30,11 @@ function evalsample(sample::Sample, x, grammar::Grammar)
 end 
 
 """
-    tableforeval!(table::Dict{Symbol, Any}, x, i)
+    tableforeval!(table::ExprRules.SymbolTable, x, i)
 
 Updates a symbol table to evaluate the i-th observation in a `RuleNode`.
 """
-function tableforeval!(table::Dict{Symbol, Any}, x, i)
+function tableforeval!(table::SymbolTable, x, i)
     @inbounds for m in axes(x, 2)
         table[Symbol("x", m)] = x[i, m]
     end 
