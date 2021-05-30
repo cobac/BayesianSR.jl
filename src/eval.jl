@@ -45,6 +45,9 @@ function evalmodel(sample::Sample, x::Matrix, grammar::Grammar)
     return sample.β[begin] .+ evalsample(sample, x, grammar) * view(sample.β, 2:length(sample.β))
 end 
 
+evalmodel(chain::Chain) = evalmodel(chain.samples[end], chain.x, chain.grammar)
+evalmodel(chain::Chain, x::Matrix) = evalmodel(chain.samples[end], x, chain.grammar)
+
 const feature_symbols = [:x1,   :x2,  :x3,  :x4,  :x5,  :x6,  :x7,  :x8,  :x9, :x10,
                          :x11, :x12, :x13, :x14, :x15, :x16, :x17, :x18, :x19, :x20,
                          :x21, :x22, :x23, :x24, :x25, :x26, :x27, :x28, :x29, :x30,
