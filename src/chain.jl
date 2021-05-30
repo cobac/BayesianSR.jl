@@ -33,11 +33,7 @@ function Chain(x::Matrix, y::Vector;
     @unpack k, σ²_prior = hyper
     grammar = append!(deepcopy(lineargrammar),
                       append!(deepcopy(operators), variablestogrammar(x)))
-    sample = Sample(k, grammar, hyper)
-    try 
-        optimβ!(sample, x, y, grammar)
-    catch e 
-    end 
+    sample = new_sample_recursive(k, grammar, hyper, x, y)
     stats = Dict([(:lastj, 0), (:accepted, 0)])
     return Chain([sample], grammar, x, y, stats, hyper)
 end 
@@ -55,3 +51,4 @@ Base.length(chain::Chain) = length(chain.samples)
 Number of `RuleNode` per `Sample` of a `Chain`.
 """
 no_trees(chain::Chain) = length(chain.samples[1].trees)
+

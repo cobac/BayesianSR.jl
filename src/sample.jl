@@ -32,3 +32,18 @@ function Sample(k::Real, grammar::Grammar, hyper::Hyperparams)
                  (:σ²_a, rand(σ²_a_prior)),
                  (:σ²_b, rand(σ²_b_prior))]))
 end 
+
+"""
+    new_sample_recursive(k::Int, grammar::Grammar, hyper::Hyperparams, x::Matrix, y::Vector)
+
+Generates a new sample guaranteeing that the mathematical expression is well behaved (i.e. no NaNs).
+"""
+function new_sample_recursive(k::Int, grammar::Grammar, hyper::Hyperparams, x::Matrix, y::Vector)
+    sample = Sample(k, grammar, hyper)
+    try 
+        optimβ!(sample, x, y, grammar)
+    catch e 
+        return new_sample_recursive(k, grammar, hyper, x, y)
+    end 
+    return sample
+end 
