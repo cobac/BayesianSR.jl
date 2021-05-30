@@ -2,12 +2,12 @@ using BayesianSR, Test
 
 N_TEST = 20
 
-using ExprRules, Random, LinearAlgebra, Distributions, Parameters
+using ExprRules, Random, LinearAlgebra, Distributions, Parameters, Symbolics
 # using ExprTools
 # using AbstractTrees
 
 Random.seed!(2)
-n = 30
+n = 100
 k = 3
 β = rand(Uniform(-2, 2), k + 1)
 x = rand(Uniform(-10, 10), (n, k))
@@ -463,6 +463,17 @@ end
         @test length(U.a) == length(U.b) == 3
         @test length(U⁺.a) == length(U⁺.b) == length(θ_old.a)
         @test length(θ.a) + length(U⁺.a) == length(θ_old.a) + length(U.a)
+    end 
+end 
+
+@testset "Interface" begin
+    chain = Chain(x, y)
+    @variables x1, x2, x3
+    ex = get_function(chain)
+    f = build_function(ex, [x1, x2, x3], expression = Val{false})
+    ŷ = evalmodel(chain)
+    for i in 1:n
+        @test f(@view chain.x[i, :]) ≈ ŷ[i]
     end 
 end 
 

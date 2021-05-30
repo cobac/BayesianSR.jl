@@ -1,8 +1,16 @@
 module BayesianSR
-using ExprRules, Distributions, Random, StatsBase, Parameters, Reexport
-import ExprRules: RuleNodeAndCount, RuleNode
+using ExprRules,
+    Distributions,
+    Random,
+    StatsBase,
+    Parameters,
+    Reexport,
+    MacroTools,
+    Symbolics,
+    Latexify
+import ExprRules: RuleNodeAndCount, RuleNode, get_executable
 
-export Chain, Hyperparams, mcmc!, no_trees
+export Chain, Hyperparams, mcmc!, no_trees, evalmodel, get_function
 @reexport using ExprRules: @grammar
 
 # Hyperparameters of the model
@@ -33,6 +41,10 @@ include("treeproposal.jl")
 include("coefproposal.jl")
 # Explore posterior space
 include("mcmc.jl")
+# Symbolic simplification
+include("simplify.jl")
+# User facing functions to interface with results
+include("interface.jl")
 
 """
     RuleNode(grammar::Grammar, hyper::Hyperparams)
