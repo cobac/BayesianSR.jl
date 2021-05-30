@@ -11,7 +11,7 @@ using ExprRules,
 import ExprRules: RuleNodeAndCount, RuleNode, get_executable
 
 export Chain, Hyperparams, mcmc!, no_trees, evalmodel, get_function
-@reexport using ExprRules: @grammar
+@reexport using ExprRules: @grammar, RuleNode
 
 # Hyperparameters of the model
 include("hyperparams.jl")
