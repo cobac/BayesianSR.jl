@@ -41,11 +41,27 @@ function tableforeval!(table::SymbolTable, x::Matrix, i::Int)
     return nothing
 end 
 
+"""
+    evalmodel(sample::Sample, x::Matrix, grammar::Grammar)
+
+Evaluates a `Sample`. Outputs a vector.
+"""
 function evalmodel(sample::Sample, x::Matrix, grammar::Grammar)
     return sample.β[begin] .+ evalsample(sample, x, grammar) * view(sample.β, 2:length(sample.β))
 end 
 
+"""
+    evalmodel(chain::Chain)
+
+Evaluates the last `Sample` of a `Chain`.
+"""
 evalmodel(chain::Chain) = evalmodel(chain.samples[end], chain.x, chain.grammar)
+
+"""
+    evalmodel(chain::Chain, x::Matrix)
+
+Evaluates the last `Sample` of a `Chain` with data `x`.
+"""
 evalmodel(chain::Chain, x::Matrix) = evalmodel(chain.samples[end], x, chain.grammar)
 
 const feature_symbols = [:x1,   :x2,  :x3,  :x4,  :x5,  :x6,  :x7,  :x8,  :x9, :x10,
