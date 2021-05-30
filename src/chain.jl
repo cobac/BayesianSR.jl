@@ -37,7 +37,6 @@ function Chain(x::Matrix, y::Vector;
     try 
         optimβ!(sample, x, y, grammar)
     catch e 
-        sample.β = zeros(k + 1)
     end 
     stats = Dict([(:lastj, 0), (:accepted, 0)])
     return Chain([sample], grammar, x, y, stats, hyper)
