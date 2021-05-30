@@ -36,7 +36,7 @@ Updates a symbol table to evaluate the i-th observation in a `RuleNode`.
 """
 function tableforeval!(table::SymbolTable, x, i)
     @inbounds for m in axes(x, 2)
-        table[Symbol("x", m)] = x[i, m]
+        table[feature_symbols[m]] = x[i, m]
     end 
     return nothing
 end 
@@ -44,3 +44,5 @@ end
 function evalmodel(sample::Sample, x, grammar::Grammar)
     return sample.β[begin] .+ evalsample(sample, x, grammar) * view(sample.β, 2:length(sample.β))
 end 
+
+const feature_symbols = [:x1, :x2, :x3, :x4, :x5, :x6, :x7, :x8, :x9, :x10]
