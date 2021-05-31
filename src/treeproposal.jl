@@ -26,7 +26,6 @@ function proposetree(tree::RuleNode, grammar::Grammar, hyper::Hyperparams; verbo
     n_lo = n_linear_operators(tree)
     nₜ = n_terminals(tree, grammar)
     n_cand = n_candidates(tree, grammar)
-    node_types = nodetypes(grammar)
     operator_is = operator_indices(grammar)
     terminal_is = terminal_indices(grammar)
     # P_0 = P(tree stays the same)
