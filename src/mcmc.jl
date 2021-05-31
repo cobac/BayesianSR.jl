@@ -163,6 +163,7 @@ function mcmc!(chain::Chain, n_steps::Int=100; verbose::Bool=false)
         verbose && println("MCMC step for tree j = ", j)
         chain.samples[i] = BayesianSR.step(chain, i - 1, j, verbose=verbose)
     end 
+    return nothing
 end 
 
 function log_likelihood(sample::Sample, grammar::Grammar, x::Matrix{Float64}, y::Vector{Float64})
