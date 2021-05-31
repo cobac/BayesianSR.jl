@@ -12,4 +12,4 @@ end
 
 get_function(chain::Chain; latex::Bool = false) = get_function(chain.samples[end],
                                                                chain.grammar;
-                                                                             latex = latex)
+                                                               latex = latex)
