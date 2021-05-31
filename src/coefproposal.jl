@@ -31,7 +31,7 @@ end
 
 """
     propose_LinearCoef!(tree::RuleNode, σ²_a::AbstractFloat, σ²_b::AbstractFloat)
-Updates a `RuleNode` with a new set of `LinearCoef`.
+Updates a `RuleNode` with a new set of `LinearCoef` without Reversible Jump MCMC.
 Returns an object of type `SetLinearCoef` with the new coefficients.
 """
 function propose_LinearCoef!(tree::RuleNode, σ²_a::AbstractFloat, σ²_b::AbstractFloat)
@@ -54,7 +54,7 @@ end
 """
     propose_LinearCoef!(tree::RuleNode, σ²_a::AbstractFloat, σ²_b::AbstractFloat, 
                              θ_old::SetLinearCoef, mov::Symbol)
-Updates a `RuleNode` with a new set of `LinearCoef`.
+Updates a `RuleNode` with a new set of `LinearCoef` with Reversible Jump MCMC.
 Returns an object of type `SetLinearCoef` with the new coefficients
 and two `SetLinearCoef` with the auxiliary variables U and U⁺.
 """
