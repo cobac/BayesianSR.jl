@@ -213,6 +213,7 @@ end
 @testset "Random Chain initialization" begin
     k = 3
     chain = Chain(x, y)
+    @test chain[1] == chain.samples[1]
     test_chain(chain)
     chain = Chain(x, y, hyper=hyper)
     test_chain(chain)

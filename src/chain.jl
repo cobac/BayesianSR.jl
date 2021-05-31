@@ -52,3 +52,10 @@ Number of `RuleNode` per `Sample` of a `Chain`.
 """
 no_trees(chain::Chain) = length(chain.samples[1].trees)
 
+
+"""
+    getindex(chain::Chain, i) = chain.samples[i]
+
+Get the i-th `Sample` of a `Chain`.
+"""
+Base.getindex(chain::Chain, i) = chain.samples[i]
