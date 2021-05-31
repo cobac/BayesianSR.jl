@@ -424,8 +424,6 @@ end
         θ = BayesianSR.propose_LinearCoef!(node, 1., 1.)
         @test θ_old.a != θ.b
         @test θ_old.b != θ.b
-        @test θ.a == [-0.9588066488484266, 0.3440309806651667]
-        @test θ.b == [3.1952887708593747, 0.7909832955503989]
         @test node.children[1].children[1]._val == BayesianSR.LinearCoef(θ.a[1], θ.b[1])
     end 
 

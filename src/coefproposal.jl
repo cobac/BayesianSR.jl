@@ -41,7 +41,9 @@ function propose_LinearCoef!(tree::RuleNode, σ²_a::AbstractFloat, σ²_b::Abst
     while !isempty(queue)
         current = queue[1]
         if current.ind == 1 # LinearCoef
-            current._val = LinearCoef(σ²_a, σ²_b, variances=true)
+            old_val = current._val
+            current._val = LinearCoef(old_val.a + rand(Normal(0, 1)), old_val.b + rand(Normal(0, 1)))
+            LinearCoef(σ²_a, σ²_b, variances=true)
             push!(new_a, current._val.a)
             push!(new_b, current._val.b)
         end 
