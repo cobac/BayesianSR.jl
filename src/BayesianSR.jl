@@ -7,7 +7,8 @@ using ExprRules,
     Reexport,
     MacroTools,
     Symbolics,
-    Latexify
+    Latexify,
+    ProgressMeter
 import ExprRules: RuleNodeAndCount, RuleNode, get_executable
 
 export Chain, Hyperparams, mcmc!, no_trees, evalmodel, get_function

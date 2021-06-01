@@ -148,11 +148,12 @@ function step(chain::Chain, i::Int, j::Int ; verbose::Bool=false)
 end 
 
 """
-    mcmc!(chain::Chain, n_steps::Int = 100; verbose::Bool = false)
+    mcmc!(chain::Chain, n_steps::Int = 100; verbose::Bool = false, progress::Progress = Progress(n_steps))
 
 Samples from the posterior space `n_steps` iterations via MCMC.
 """
-function mcmc!(chain::Chain, n_steps::Int=100; verbose::Bool=false)
+function mcmc!(chain::Chain, n_steps::Int=100;
+               verbose::Bool=false, progress::Progress = Progress(n_steps))
     i₀ = length(chain)
     resize!(chain.samples, i₀ + n_steps)
     for i in (i₀ + 1):(i₀ + n_steps)
@@ -162,6 +163,7 @@ function mcmc!(chain::Chain, n_steps::Int=100; verbose::Bool=false)
         chain.stats[:lastj] = j
         verbose && println("MCMC step for tree j = ", j)
         chain.samples[i] = BayesianSR.step(chain, i - 1, j, verbose=verbose)
+        next!(progress)
     end 
     return nothing
 end 
