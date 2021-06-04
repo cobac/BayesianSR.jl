@@ -163,6 +163,7 @@ function mcmc!(chain::Chain, n_steps::Int=100;
         chain.stats[:lastj] = j
         verbose && println("MCMC step for tree j = ", j)
         chain.samples[i] = BayesianSR.step(chain, i - 1, j, verbose=verbose)
+        chain.stats[:last_sample] += 1
         next!(progress)
     end 
     return nothing

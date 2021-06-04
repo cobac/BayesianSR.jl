@@ -34,7 +34,7 @@ function Chain(x::Matrix, y::Vector;
     grammar = append!(deepcopy(lineargrammar),
                       append!(deepcopy(operators), variablestogrammar(x)))
     sample = new_sample_recursive(k, grammar, hyper, x, y)
-    stats = Dict([(:lastj, 0), (:accepted, 0)])
+    stats = Dict([(:lastj, 0), (:last_sample, 1), (:accepted, 0)])
     return Chain([sample], grammar, x, y, stats, hyper)
 end 
 
