@@ -30,7 +30,7 @@ Initialize a `Chain`.
 function Chain(x::Matrix, y::Vector;
                operators::Grammar=deepcopy(defaultgrammar),
                hyper::Hyperparams=Hyperparams())
-    @unpack k, σ²_prior = hyper
+    @unpack k = hyper
     grammar = append!(deepcopy(lineargrammar),
                       append!(deepcopy(operators), variablestogrammar(x)))
     sample = new_sample_recursive(k, grammar, hyper, x, y)
