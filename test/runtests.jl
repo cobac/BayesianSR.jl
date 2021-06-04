@@ -488,3 +488,28 @@ end
         @test all([isassigned(chain.samples, i) for i in 1:length(chain)])
     end 
 end 
+
+@testset "MCMC: multichain sampling" begin
+    chain = Chain(x, y)
+    @test_throws Exception mcmc!(chain, 2, no_chains = 0)
+    @test_throws Exception mcmc!(chain, 2, no_chains = -1)
+    @test_throws Exception mcmc!(chain, 2, p_inter_chain_jump= 0)
+    @test_throws Exception mcmc!(chain, 2, p_inter_chain_jump= 1)
+    @test_throws Exception mcmc!(chain, 2, p_inter_chain_jump= -0.5)
+    @test_throws Exception mcmc!(chain, 2, p_inter_chain_jump= 1.5)
+    mcmc!(chain, 1)
+    @test_throws Exception mcmc!(chain, 1, no_chains = 2)
+    for _ in 1:N_TEST
+        chain = Chain(x, y)
+        test_chain(chain)
+        no_chains = 4
+        n = 100
+        chains = mcmc!(chain, n, no_chains = no_chains, verbose=false)
+        @test length(chains) == no_chains
+        for achain in chains
+            test_chain(achain, initial=false)
+            @test length(achain) == n + 1
+            @test all([isassigned(achain.samples, i) for i in 1:length(achain)])
+        end
+    end 
+end 
