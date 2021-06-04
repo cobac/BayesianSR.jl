@@ -184,7 +184,7 @@ end
 
 @testset "Random sample initialization" begin
     Random.seed!(1)
-    sample = BayesianSR.Sample(k, fullgrammar, hyper)
+    sample = BayesianSR.Sample(fullgrammar, hyper)
     test_sample(sample)
     @test all(iszero.(BayesianSR.evalmodel(sample, x, fullgrammar)))
     @test maximum(sample.β) == 0
@@ -477,7 +477,7 @@ end
     end 
 end 
 
-@testset "MCMC" begin
+@testset "MCMC: one chain" begin
     for _ in 1:N_TEST
         chain = Chain(x, y)
         test_chain(chain)
