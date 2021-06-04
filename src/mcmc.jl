@@ -186,9 +186,9 @@ function mcmc!(chain::Chain, n_steps::Int=100; no_chains::Int=1, p_interchain_ju
         # New vector with all chains initialized with different samples
         chains = push!([Chain([new_sample_recursive(chain.grammar, chain.hyper, chain.x, chain.y)],
                               chain.grammar, chain.x, chain.y, deepcopy(chain.stats), chain.hyper)
-                        for _ in 1:(no_chains-1)], chain)
+                        for _ in 1:(no_chains - 1)], chain)
         for achain in chains resize!(achain.samples, 1 + n_steps) end
-        for i in 2:(n_steps+1)
+        for i in 2:(n_steps + 1)
             verbose && println("==Iteration ", i, "/", n_steps, " at sample ", i, "==")
             j = chain.stats[:lastj] + 1
             j == no_trees(chain) + 1 ? j = 1 : nothing

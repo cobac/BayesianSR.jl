@@ -16,7 +16,7 @@ Each sample of a `Chain` is one equation.
 struct Sample
     trees::Vector{RuleNode}
     β::Vector{Float64}
-    σ²::Dict{Symbol, AbstractFloat}
+    σ²::Dict{Symbol,AbstractFloat}
 end 
 
 """
