@@ -4,6 +4,8 @@ Bayesian symbolic regression based on the algorithm described in http://arxiv.or
 
 The symbolic trees are represented using [[https://github.com/sisl/ExprRules.jl][ExprRules]] =RuleNode='s.
 
+This code is an unreleased, unstable, without versioning package very much WIP.
+
 * Basic usage
 
 #+BEGIN_SRC julia :results silent :exports code
@@ -59,4 +61,8 @@ The ~Chain()~ constructor will append to the grammar of operators the mandatory 
   mcmc!(chain, n, verbose = false)
 #+END_SRC
 
+* TODO Multichain sampling usage
+* TODO Better user interface
+** Input validation
+** Output
 
