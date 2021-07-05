@@ -21,6 +21,11 @@ end
 fullgrammar = append!(deepcopy(BayesianSR.lineargrammar),
                       append!(deepcopy(BayesianSR.defaultgrammar), vargrammar))
 
+@testset "default grammar" begin
+    @test fullgrammar.rules == Chain(x, y).grammar.rules
+end 
+
+
 hyper = Hyperparams()
 
 function test_hyperparams(hyper::Hyperparams)
@@ -466,16 +471,16 @@ end
     end 
 end 
 
-@testset "Interface" begin
-    chain = Chain(x, y)
-    @variables x1, x2, x3
-    ex = get_function(chain)
-    f = build_function(ex, [x1, x2, x3], expression = Val{false})
-    ŷ = evalmodel(chain)
-    for i in 1:n
-        @test f(@view chain.x[i, :]) ≈ ŷ[i]
-    end 
-end 
+# @testset "Interface" begin
+#     chain = Chain(x, y)
+#     @variables x1, x2, x3
+#     ex = get_function(chain)
+#     f = build_function(ex, [x1, x2, x3], expression = Val{false})
+#     ŷ = evalmodel(chain)
+#     for i in 1:n
+#         @test f(@view chain.x[i, :]) ≈ ŷ[i]
+#     end 
+# end 
 
 @testset "MCMC: one chain" begin
     for _ in 1:N_TEST
@@ -488,3 +493,4 @@ end
         @test all([isassigned(chain.samples, i) for i in 1:length(chain)])
     end 
 end 
+

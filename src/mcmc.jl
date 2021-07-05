@@ -133,13 +133,23 @@ function step(chain::Chain, i::Int, j::Int ; verbose::Bool=false)
         println("Acceptance ratio: ", R)
     end 
     
-    isnan(R) && error("R is NaN.")
+    # isnan(R) && error("R is NaN.")
 
     # Update chain
     α = min(1.0, R)
     if (rand() < α)
         verbose && println("Sample accepted!")
         chain.stats[:accepted] += 1
+        if length(flatten(proposal.trees[j])) > 3
+            try
+                verbose && @show get_executable(proposal.trees[j], chain.grammar)
+                proposal.trees[j] = symbolic_to_RuleNode(get_function(proposal.trees[j], chain.grammar), chain.grammar)
+                verbose && println("Successful simplification: ", get_executable(proposal.trees[j], chain.grammar))
+            catch e
+                verbose && println("Failed simplification")
+                nothing 
+            end
+        end
         return proposal
     else 
         verbose && println("Sample rejected.")

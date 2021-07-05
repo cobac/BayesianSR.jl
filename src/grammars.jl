@@ -101,3 +101,17 @@ function terminal_indices(grammar::Grammar)
     is = findall(iszero, node_types)
     return is
 end 
+
+"""
+    rule_symbols(grammar::Grammar)
+
+Returns a list with all symbols corresponding to the operators of a grammar, excluding the linear operators.
+"""
+function rule_symbols(grammar::Grammar)
+    operator_is = BayesianSR.operator_indices(grammar)
+    out = Vector(undef, length(operator_is))
+    for i in eachindex(operator_is)
+        out[i] = grammar.rules[operator_is[i]].args[1]
+    end 
+    return out 
+end 
