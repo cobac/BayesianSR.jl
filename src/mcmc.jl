@@ -148,6 +148,8 @@ function step(chain::Chain, i::Int, j::Int ; verbose::Bool=false)
                 # Would break tree movements
                 if length(flatten(simplified_tree)) > 2
                     proposal.trees[j] = simplified_tree
+                    # Safeguard to avoid improper samples
+                    log_likelihood(proposal, chain.grammar, chain.x, chain.y)
                 else error()
                 end 
                 verbose && println("Successful simplification: ", get_executable(proposal.trees[j], chain.grammar))
