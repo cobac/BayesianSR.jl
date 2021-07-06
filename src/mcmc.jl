@@ -143,7 +143,13 @@ function step(chain::Chain, i::Int, j::Int ; verbose::Bool=false)
         if length(flatten(proposal.trees[j])) > 3
             try
                 verbose && @show get_executable(proposal.trees[j], chain.grammar)
-                proposal.trees[j] = symbolic_to_RuleNode(get_function(proposal.trees[j], chain.grammar), chain.grammar)
+                simplified_tree = symbolic_to_RuleNode(get_function(proposal.trees[j], chain.grammar), chain.grammar)
+                # Safeguard to avoid creating trees without operators
+                # Would break tree movements
+                if length(flatten(simplified_tree)) > 2
+                    proposal.trees[j] = simplified_tree
+                else error()
+                end 
                 verbose && println("Successful simplification: ", get_executable(proposal.trees[j], chain.grammar))
             catch e
                 verbose && println("Failed simplification")
