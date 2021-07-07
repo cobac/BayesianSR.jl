@@ -42,10 +42,8 @@ include("treeproposal.jl")
 include("coefproposal.jl")
 # Explore posterior space
 include("mcmc.jl")
-# Symbolic simplification
-include("simplify.jl")
-# User facing functions to interface with results
-include("interface.jl")
+# Symbolic translation and simplification
+include("symbolics.jl")
 
 """
     RuleNode(grammar::Grammar, hyper::Hyperparams)

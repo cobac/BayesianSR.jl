@@ -35,9 +35,12 @@ function sampleterminal(node::RuleNode, grammar::Grammar)
     out = sample(NodeLoc, node)
     # if node is LinearCoef or operator, resample
     target = get(node, out)
+    count = 0
     while target.ind == 1 || in(target.ind, operator_is)
+        count > 1000 && error("sampleterminal() got stuck in an infinite loop. Node: ", node)
         out = sample(NodeLoc, node)
         target = get(node, out)
+        count +=1
     end 
     return out
 end 
@@ -53,9 +56,12 @@ function sampleoperator(node::RuleNode, grammar::Grammar)
     out = sample(NodeLoc, node)
     # if node is LinearCoef or terminal, resample
     target = get(node, out)
+    count = 0
     while target.ind == 1 || in(target.ind, terminal_is)
+        count > 1000 && error("sampleoperator() got stuck in an infinite loop. Node: ", node)
         out = sample(NodeLoc, node)
         target = get(node, out)
+        count +=1
     end 
     return out
 end 
@@ -74,7 +80,7 @@ function samplecandidate(node::RuleNode, grammar::Grammar)
     target = get(node, out)
     while !iscandidate(target, node, grammar)
         count += 1
-        count >= 1000 && error("`samplecandidate()` got stuck in an infinite loop.")
+        count >= 1000 && error("`samplecandidate()` got stuck in an infinite loop. Node: ", node)
         out = sample(NodeLoc, node)
         target = get(node, out)
     end 
